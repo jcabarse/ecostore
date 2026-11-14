@@ -10,8 +10,9 @@ const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { 
 // Exchange rate: how many pesos equal 1 US dollar (keep the same as the card and cart)
 const PHP_PER_USD = 64.5;
 
-// Flat delivery fee in US dollars (same $5.00 as before)
-const DELIVERY_USD = 5.0;
+// Flat delivery fee in pesos (converted to USD below)
+const DELIVERY_PESO = 80;
+const DELIVERY_USD = DELIVERY_PESO / PHP_PER_USD;
 
 const formatUSD = (usd) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(usd);
