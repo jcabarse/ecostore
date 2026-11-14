@@ -6,6 +6,7 @@ import SiteFooter from '../components/SiteFooter';
 import LocationMap from '../components/LocationMap';
 import CookieConsent from '../components/CookieConsent';
 import { Reveal, TiltCard, FloatingLeaves, ScrollProgress } from '../components/MotionKit';
+import { PromoTicker, Countdown, DealCard, PROMOS } from '../components/PromoKit';
 import { STORE, fullAddress } from '../lib/storeInfo';
 
 /* ------------------------------------------------------------
@@ -91,7 +92,17 @@ export default function LandingPage() {
             <div className="hero-spot absolute inset-0" />
           </div>
 
-          <div className="absolute inset-x-0 top-[60%] px-6 text-center">
+          <div className="absolute inset-x-0 top-[58%] px-6 text-center">
+            {/* NEW: welcome-offer pill */}
+            <Reveal delay={800}>
+              <a
+                href="#deals"
+                className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#F4B942]/60 bg-[#FFF6DD] px-4 py-1.5 text-sm font-semibold text-[#1B4332] shadow-sm transition hover:-translate-y-0.5"
+              >
+                <span aria-hidden="true">🎉</span>
+                New here? Get {PROMOS.welcomePercent}% off with code <strong>{PROMOS.welcomeCode}</strong>
+              </a>
+            </Reveal>
             <Reveal delay={1000}>
               <p className="mx-auto max-w-xl text-lg text-[#1B4332]/80 sm:text-xl">{HERO_LINE}</p>
             </Reveal>
@@ -123,6 +134,71 @@ export default function LandingPage() {
               <span className="scroll-cue-dot absolute left-1/2 top-1.5 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#1B4332]" />
             </span>
           </a>
+        </section>
+
+        {/* ============ NEW: OFFER STRIP ============ */}
+        <PromoTicker />
+
+        {/* ============ NEW: DEALS ============ */}
+        <section id="deals" className="scroll-mt-24 px-6 py-24">
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+              <div>
+                <Reveal><Eyebrow>Deals</Eyebrow></Reveal>
+                <Reveal delay={100}>
+                  <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-[#1B4332] sm:text-4xl">
+                    Greener for less this week
+                  </h2>
+                </Reveal>
+                <Reveal delay={200}>
+                  <p className="mt-3 max-w-xl text-lg text-gray-600">
+                    Small savings on the swaps that make the biggest difference.
+                  </p>
+                </Reveal>
+              </div>
+              <Reveal delay={250}>
+                <div>
+                  <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[#40916C]">Offers end in</p>
+                  <Countdown />
+                </div>
+              </Reveal>
+            </div>
+
+            <div className="mt-12 grid gap-6 lg:grid-cols-3">
+              <Reveal delay={0}>
+                <DealCard
+                  big={`${PROMOS.welcomePercent}% off`}
+                  title="Welcome offer"
+                  text="Your first EcoStore order starts a little cheaper. Copy the code and paste it at checkout."
+                  code={PROMOS.welcomeCode}
+                  href="/products"
+                  cta="Start shopping"
+                />
+              </Reveal>
+              <Reveal delay={140}>
+                <DealCard
+                  dark
+                  ribbon="Best value"
+                  big={`Save ${PROMOS.bundlePercent}%`}
+                  title="Starter bundle"
+                  text="Add charcoal, pots and rugs to your cart together and get the bundle discount on all three."
+                  note="Discount applies when all three are in your cart."
+                  href="/products"
+                  cta="Build your bundle"
+                />
+              </Reveal>
+              <Reveal delay={280}>
+                <DealCard
+                  big="Free delivery"
+                  title={`On orders over ${PROMOS.freeDeliveryMin}`}
+                  text="Fill your cart a little more and we'll cover the delivery fee."
+                  note="No code needed. Applied automatically at checkout."
+                  href="/products"
+                  cta="Shop Products"
+                />
+              </Reveal>
+            </div>
+          </div>
         </section>
 
         {/* ============ ABOUT ============ */}
@@ -257,12 +333,18 @@ export default function LandingPage() {
                 <p className="mx-auto mt-4 max-w-xl text-lg text-[#B7E4C7]">
                   Browse our plastic-free, eco-friendly essentials and make the swap today.
                 </p>
-                <Link
-                  href="/products"
-                  className="mt-8 inline-block rounded-full bg-[#FDFBF7] px-9 py-4 text-base font-bold text-[#1B4332] shadow-lg transition hover:-translate-y-0.5 hover:bg-white"
-                >
-                  Shop Products
-                </Link>
+                {/* NEW: coupon reminder */}
+                <p className="mx-auto mt-5 inline-block rounded-full bg-[#F4B942] px-5 py-2 text-sm font-bold text-[#1B4332]">
+                  Use code {PROMOS.welcomeCode} for {PROMOS.welcomePercent}% off your first order
+                </p>
+                <div>
+                  <Link
+                    href="/products"
+                    className="mt-8 inline-block rounded-full bg-[#FDFBF7] px-9 py-4 text-base font-bold text-[#1B4332] shadow-lg transition hover:-translate-y-0.5 hover:bg-white"
+                  >
+                    Shop Products
+                  </Link>
+                </div>
               </div>
             </div>
           </Reveal>
