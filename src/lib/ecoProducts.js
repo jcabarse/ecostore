@@ -24,7 +24,7 @@ export const ECO_PRODUCTS = [
     category: 'Pots',
     description:
       'Sturdy plant pots shaped by hand from natural clay and reclaimed fired-clay scrap. Breathable, plastic-free, and perfect for herbs and indoor greens.',
-    price: 20-50,
+    price: 50,
     image: 'https://images.pexels.com/photos/9707245/pexels-photo-9707245.jpeg?auto=compress&cs=tinysrgb&w=800',
     emoji: '🪴',
     badge: 'Plastic-free',
