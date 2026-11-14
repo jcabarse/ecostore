@@ -13,7 +13,7 @@ export const ECO_PRODUCTS = [
     category: 'Charcoal',
     description:
       'Clean-burning briquettes pressed from recycled coconut shell and wood offcuts. Long-lasting heat, less smoke, and zero virgin timber.',
-    price: 180,
+    price: 20,
     image: 'https://images.pexels.com/photos/9263/summer-garden-dinner-eating.jpg?auto=compress&cs=tinysrgb&w=800',
     emoji: '🔥',
     badge: 'Made from recycled materials',
@@ -24,7 +24,7 @@ export const ECO_PRODUCTS = [
     category: 'Pots',
     description:
       'Sturdy plant pots shaped by hand from natural clay and reclaimed fired-clay scrap. Breathable, plastic-free, and perfect for herbs and indoor greens.',
-    price: 250,
+    price: 20-50,
     image: 'https://images.pexels.com/photos/9707245/pexels-photo-9707245.jpeg?auto=compress&cs=tinysrgb&w=800',
     emoji: '🪴',
     badge: 'Plastic-free',
@@ -35,7 +35,7 @@ export const ECO_PRODUCTS = [
     category: 'Rugs',
     description:
       'A soft, durable floor rug hand-woven from upcycled fabric strips and natural fibers. Adds warmth to any room while keeping textile waste out of landfills.',
-    price: 650,
+    price: 35,
     image: 'https://images.pexels.com/photos/8186478/pexels-photo-8186478.jpeg?auto=compress&cs=tinysrgb&w=800',
     emoji: '🧶',
     badge: 'Upcycled fibers',
