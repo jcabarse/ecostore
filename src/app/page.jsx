@@ -99,7 +99,7 @@ export default function LandingPage() {
                 href="#deals"
                 className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#F4B942]/60 bg-[#FFF6DD] px-4 py-1.5 text-sm font-semibold text-[#1B4332] shadow-sm transition hover:-translate-y-0.5"
               >
-                <span aria-hidden="true">🎉</span>
+                <span aria-hidden="true"></span>
                 New here? Get {PROMOS.welcomePercent}% off with code <strong>{PROMOS.welcomeCode}</strong>
               </a>
             </Reveal>
