@@ -7,13 +7,24 @@ const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapCo
 const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
 const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false });
 
-export default function CheckoutFlow({ cartItems, displayCurrency, exchangeRate }) {
+// Exchange rate: how many pesos equal 1 US dollar (keep the same as the card and cart)
+const PHP_PER_USD = 64.5;
+
+// Flat delivery fee in US dollars (same $5.00 as before)
+const DELIVERY_USD = 5.0;
+
+const formatUSD = (usd) =>
+  new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(usd);
+
+export default function CheckoutFlow({ cartItems }) {
   const [step, setStep] = useState(1);
   const [method, setMethod] = useState('delivery');
   const [pin, setPin] = useState({ lat: 11.005, lng: 124.608 }); // Default to Ormoc area
-  
-  const subtotalUsd = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const localSubtotal = subtotalUsd * exchangeRate;
+
+  // Cart prices are stored in pesos, so convert to USD first, then add delivery
+  const subtotalPeso = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotalUsd = subtotalPeso / PHP_PER_USD;
+  const totalUsd = subtotalUsd + DELIVERY_USD;
 
   const handleGeolocate = () => {
     navigator.geolocation.getCurrentPosition((pos) => {
@@ -63,13 +74,13 @@ export default function CheckoutFlow({ cartItems, displayCurrency, exchangeRate 
         <div className="space-y-4">
           <h2 className="text-xl font-bold">Review & Pay</h2>
           <div className="bg-gray-50 p-4 rounded text-sm space-y-2">
-            <div className="flex justify-between"><span>Subtotal:</span> <span>{displayCurrency} {localSubtotal.toFixed(2)}</span></div>
-            <div className="flex justify-between"><span>Delivery:</span> <span>{displayCurrency} {(5.00 * exchangeRate).toFixed(2)}</span></div>
+            <div className="flex justify-between"><span>Subtotal:</span> <span>{formatUSD(subtotalUsd)}</span></div>
+            <div className="flex justify-between"><span>Delivery:</span> <span>{formatUSD(DELIVERY_USD)}</span></div>
             <div className="flex justify-between font-bold border-t pt-2 text-lg">
-              <span>Total:</span> <span>{displayCurrency} {((subtotalUsd + 5.00) * exchangeRate).toFixed(2)}</span>
+              <span>Total:</span> <span>{formatUSD(totalUsd)}</span>
             </div>
           </div>
-          <p className="text-xs text-gray-500">Approximate conversion. You will be charged ${subtotalUsd + 5.00} USD.</p>
+          <p className="text-xs text-gray-500">You will be charged {formatUSD(totalUsd)} USD.</p>
           <button className="bg-[#1B4332] text-white w-full py-3 rounded font-bold">Pay Now (Gateway Demo)</button>
         </div>
       )}
