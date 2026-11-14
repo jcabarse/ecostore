@@ -1,32 +1,39 @@
 "use client";
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import Link from 'next/link';
 
-export default function SuccessPage() {
+// 1. We move the logic into a separate child component
+function SuccessContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get('order_id');
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] flex flex-col items-center justify-center px-6 text-center font-sans">
-      <div className="bg-white p-10 rounded-2xl shadow-sm border border-[#F5EBE0] max-w-lg w-full">
-        <div className="w-16 h-16 bg-[#D8F3DC] rounded-full flex items-center justify-center mx-auto mb-6">
-          <svg className="w-8 h-8 text-[#1B4332]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
-          </svg>
-        </div>
-        <h1 className="text-3xl font-bold text-[#1B4332] mb-2">Order Confirmed!</h1>
-        <p className="text-gray-600 mb-6">Thank you for shopping sustainably. Your eco-friendly products are being prepared.</p>
-        
-        {orderId && (
-          <div className="bg-gray-50 p-4 rounded-lg text-sm text-gray-500 mb-8 font-mono break-all">
-            Order ID: {orderId}
-          </div>
-        )}
+    <div className="max-w-md mx-auto mt-20 p-8 bg-white rounded-xl shadow-sm text-center border border-[#F5EBE0]">
+      <div className="text-4xl mb-4">🌱</div>
+      <h1 className="text-2xl font-bold text-[#1B4332] mb-4">Order Confirmed!</h1>
+      <p className="text-gray-600 mb-6">Thank you for your eco-friendly purchase. Your receipt has been emailed.</p>
+      
+      {orderId && (
+        <p className="text-sm bg-gray-50 text-gray-700 p-3 rounded-md mb-6 font-mono">
+          Order ID: {orderId}
+        </p>
+      )}
+      
+      <Link href="/" className="bg-[#1B4332] text-white px-6 py-3 rounded-md font-medium hover:bg-opacity-90 transition-colors inline-block">
+        Continue Shopping
+      </Link>
+    </div>
+  );
+}
 
-        <Link href="/" className="inline-block bg-[#1B4332] text-white px-8 py-3 rounded-md font-medium hover:bg-opacity-90 transition-colors">
-          Return to Store
-        </Link>
-      </div>
+// 2. We wrap that child in a Suspense boundary in the main page export
+export default function SuccessPage() {
+  return (
+    <div className="min-h-screen bg-[#FDFBF7] px-6">
+      <Suspense fallback={<div className="mt-20 text-center text-gray-500 animate-pulse">Loading your order details...</div>}>
+        <SuccessContent />
+      </Suspense>
     </div>
   );
 }
