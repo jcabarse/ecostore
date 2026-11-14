@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import CheckoutFlow from '../../components/CheckoutFlow';
 
+// Exchange rate: how many pesos equal 1 US dollar (keep the same as the card and cart)
+const PHP_PER_USD = 64.5;
+
 export default function CheckoutPage() {
   const [cart, setCart] = useState(null);
 
@@ -31,14 +34,11 @@ export default function CheckoutPage() {
         <Link href="/" className="text-[#1B4332] font-medium hover:underline">&larr; Back to Cart</Link>
       </div>
       
-      {/* 
-        Here we load the map component. 
-        For localhost demo, we are hardcoding the PHP override parameters. 
-      */}
+      {/* Prices are stored in pesos, so we show USD using 1 / PHP_PER_USD */}
       <CheckoutFlow 
         cartItems={cart} 
-        displayCurrency="PHP" 
-        exchangeRate={58.5} 
+        displayCurrency="USD" 
+        exchangeRate={1 / PHP_PER_USD} 
       />
     </div>
   );
