@@ -50,3 +50,4 @@ export const ECO_PRODUCTS = [
 
 export const formatPeso = (n) =>
   new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP', maximumFractionDigits: 0 }).format(n);
+export const DELIVERY_FEE = 80;
