@@ -1,15 +1,6 @@
-// Exchange rate: how many pesos equal 1 US dollar (keep the same as EcoProductCard.jsx)
-const PHP_PER_USD = 64.5;
-
-// Converts a peso amount to a formatted USD price
-const formatUSD = (php) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(php / PHP_PER_USD);
+import { formatPeso } from '../lib/ecoProducts';
 
 export default function CartDrawer({ isOpen, setIsOpen, cartItems, updateQuantity, removeItem }) {
-  // Subtotal stays in pesos internally and is converted only when displayed
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   const handleGoToCheckout = () => {
@@ -41,7 +32,7 @@ export default function CartDrawer({ isOpen, setIsOpen, cartItems, updateQuantit
                     <div className="ml-4 flex flex-1 flex-col">
                       <div className="flex justify-between text-base font-medium text-[#1B4332]">
                         <h3 className="truncate max-w-[150px]">{item.title}</h3>
-                        <p className="ml-4">{formatUSD(item.price * item.quantity)}</p>
+                        <p className="ml-4">{formatPeso(item.price * item.quantity)}</p>
                       </div>
                       <div className="flex flex-1 items-end justify-between mt-2 text-sm">
                         <div className="flex items-center border rounded-md">
@@ -61,7 +52,7 @@ export default function CartDrawer({ isOpen, setIsOpen, cartItems, updateQuantit
           <div className="border-t px-4 py-6 bg-white">
             <div className="flex justify-between text-lg font-bold text-[#1B4332] mb-4">
               <p>Subtotal</p>
-              <p>{formatUSD(subtotal)}</p>
+              <p>{formatPeso(subtotal)}</p>
             </div>
             <button
               onClick={handleGoToCheckout}
