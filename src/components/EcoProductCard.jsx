@@ -1,15 +1,6 @@
 "use client";
 import { useState } from 'react';
-
-// Exchange rate: how many pesos equal 1 US dollar (edit this one number)
-const PHP_PER_USD = 64.5;
-
-// Converts a peso amount to a formatted USD price (local to this card only)
-const formatUSD = (php) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(php / PHP_PER_USD);
+import { formatPeso } from '../lib/ecoProducts';
 
 // Self-contained product card for the demo products.
 // If the photo can't load, a green placeholder with an emoji shows instead.
@@ -51,7 +42,7 @@ export default function EcoProductCard({ product, addToCart }) {
         <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-600">{product.description}</p>
 
         <div className="mt-5 flex items-center justify-between gap-3">
-          <span className="text-xl font-extrabold text-[#1B4332]">{formatUSD(product.price)}</span>
+          <span className="text-xl font-extrabold text-[#1B4332]">{formatPeso(product.price)}</span>
           <button
             type="button"
             onClick={onAdd}
